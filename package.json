@@ -1,0 +1,23 @@
+{
+  "name": "yelpcamp",
+  "version": "1.0.0",
+  "description": "YelpCamp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthony-woodcock/yelp-camp.git"
+  },
+  "author": "Ant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anthony-woodcock/yelp-camp/issues"
+  },
+  "homepage": "https://github.com/anthony-woodcock/yelp-camp#readme",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}
