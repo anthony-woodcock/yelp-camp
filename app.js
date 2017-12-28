@@ -51,9 +51,14 @@ app.post("/campgrounds", function(req, res){
         name: name,
         image: image
     }
-    campgrounds.push(newCampground)
-    //redirect back to campgrounds page
-    res.redirect("/campgrounds")
+    //Create a new campground and save to DB
+    Campground.create(newCampground, function(err, newlyCreated){
+        if(err){
+            console.log(err)
+        } else {
+            res.redirect("/campgrounds")
+        }
+    })
 })
 
 app.get("/campgrounds/new", function(req, res){
