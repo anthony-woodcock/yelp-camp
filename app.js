@@ -15,33 +15,32 @@ var campgroundSchema = new mongoose.Schema({
 
 var Campground = mongoose.model("Campground", campgroundSchema)
 
-Campground.create({
-    name: "The Roaches",
-    image: "https://farm3.staticflickr.com/2464/3694344957_14180103ed.jpg"
-}, function(err, campground){
-    if(err){
-        console.log(err)
-    }else {
-        console.log("Newly created campground")
-        console.log(campground)
-    }
-})
+// Campground.create({
+//     name: "The Cloud",
+//     image: "https://farm8.staticflickr.com/7338/9627572189_12dbd88ebe.jpg",
+// }, function(err, campground){
+//     if(err){
+//         console.log(err)
+//     }else {
+//         console.log("Newly created campground")
+//         console.log(campground)
+//     }
+// })
 
-var campgrounds = [
-    {name: "The Roaches", image: "https://farm3.staticflickr.com/2464/3694344957_14180103ed.jpg"},
-    {name: "The Cloud", image: "https://farm8.staticflickr.com/7338/9627572189_12dbd88ebe.jpg"},
-    {name: "Macclesfield Forest", image: "https://farm8.staticflickr.com/7258/7121861565_3f4957acb1.jpg"},
-    {name: "The Roaches", image: "https://farm3.staticflickr.com/2464/3694344957_14180103ed.jpg"},
-    {name: "The Cloud", image: "https://farm8.staticflickr.com/7338/9627572189_12dbd88ebe.jpg"},
-    {name: "Macclesfield Forest", image: "https://farm8.staticflickr.com/7258/7121861565_3f4957acb1.jpg"}
-]
 
 app.get('/', function( req, res){
     res.render('landing')
 })
 
 app.get("/campgrounds", function(req, res){
-    res.render("campgrounds", {campgrounds: campgrounds})
+    // Get all campgrounds from DB
+    Campground.find({}, function(err, allCampgrounds){
+        if(err){
+            console.log(err)
+        } else {
+            res.render("campgrounds", {campgrounds: allCampgrounds})
+        }
+    })
 })
 
 app.post("/campgrounds", function(req, res){
