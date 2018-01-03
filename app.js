@@ -11,21 +11,6 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.set("view engine", "ejs")
 
 
-
-// Campground.create({
-//     name: "The Cloud",
-//     image: "https://farm8.staticflickr.com/7338/9627572189_12dbd88ebe.jpg",
-//     description: "This is a huge granite hill, no bathrooms. No water. Beautful granite"
-// }, function(err, campground){
-//     if(err){
-//         console.log(err)
-//     }else {
-//         console.log("Newly created campground")
-//         console.log(campground)
-//     }
-// })
-
-
 app.get('/', function( req, res){
     res.render('landing')
 })
@@ -71,10 +56,11 @@ app.get("/campgrounds/new", function(req, res){
 //SHOW - shows more info about one campground
 app.get("/campgrounds/:id", function(req, res){
     //find the campground with provided ID
-    Campground.findById(req.params.id, function(err, foundCampground){
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
             console.log(err)
         } else {
+            console.log(foundCampground)
             //render show template with that campground
             res.render("show", {campground: foundCampground})
         }
