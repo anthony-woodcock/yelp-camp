@@ -132,7 +132,16 @@ app.get("/register", function(req, res){
 })
 // Handle sign up logic
 app.post("/register", function(req, res){
-    res.send("Signing you up")
+    var newUser = new User({username: req.body.username})
+    User.register(newUser, req.body.password, function(err, user){
+        if(err){
+            console.log(err)
+            return res.render("register")
+        }
+        passport.authenticate("local")(req, res, function(){
+            res.redirect("/campgrounds")
+        })
+    })
 })
 
 app.listen(3000, function(){
