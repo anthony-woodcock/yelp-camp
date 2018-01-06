@@ -15,6 +15,18 @@ app.set("view engine", "ejs")
 app.use(express.static(__dirname + "/public"))
 seedDB()
 
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret: "Hello world",
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
 app.get('/', function( req, res){
     res.render('landing')
 })
@@ -110,6 +122,17 @@ app.post("/campgrounds/:id/comments", function(req, res){
     //create new comment
     //connet new comment to campground
     //redirect to campground showpage
+})
+
+
+// AUTH ROUTES
+// show register form
+app.get("/register", function(req, res){
+    res.render("register")
+})
+// Handle sign up logic
+app.post("/register", function(req, res){
+    res.send("Signing you up")
 })
 
 app.listen(3000, function(){
