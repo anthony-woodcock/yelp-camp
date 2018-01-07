@@ -144,6 +144,11 @@ app.post("/register", function(req, res){
     })
 })
 
+// show login form
+app.get('/login', function(req, res){
+    res.render("login")
+})
+
 app.listen(3000, function(){
     console.log('listening on localhost 3000')
 })
