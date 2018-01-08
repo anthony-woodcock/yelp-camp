@@ -15,7 +15,7 @@ router.get("/", function(req, res){
 })
 
 //CREATE add new campground to daatabase
-router.post("/", function(req, res){
+router.post("/", isLoggedIn, function(req, res){
     //get data from the form and add to campgrounds array
     var name = req.body.name
     var image = req.body.image
@@ -36,7 +36,7 @@ router.post("/", function(req, res){
 })
 
 //NEW - show for to create new campground
-router.get("/new", function(req, res){
+router.get("/new", isLoggedIn, function(req, res){
     res.render("campgrounds/new")
 })
 
@@ -56,5 +56,13 @@ router.get("/:id", function(req, res){
     //render show template with that campground
     
 })
+
+//middleware
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect("/login")
+}
 
 module.exports = router
