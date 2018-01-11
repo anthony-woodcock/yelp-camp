@@ -65,13 +65,23 @@ router.get("/:id", function(req, res){
 
 //EDIT CAMPGROUND ROUTE
 router.get("/:id/edit", function(req, res){
-    Campground.findById(req.params.id, function(err, foundCampground){
-        if(err){
-            res.redirect("/campgrounds")
-        } else {
-            res.render("campgrounds/edit", {campground: foundCampground})
-        }
-    }) 
+    //is user logged in
+    if(req.isAuthenticated()){
+        Campground.findById(req.params.id, function(err, foundCampground){
+            if(err){
+                res.redirect("/campgrounds")
+            } else {
+                res.render("campgrounds/edit", {campground: foundCampground})
+            }
+        }) 
+    } else {
+        console.log("YOU NEED TO BE LOGGED IN TO DO THAT")
+        res.send("YOU NEED TO BE LOGGED IN TO DO THAT")
+    }
+        //does user own campground
+        //otherwise redirect
+    //if not, redirect
+
 })
 //UPDATE CAMPGROUND ROUTE
 
