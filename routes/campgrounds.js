@@ -64,29 +64,10 @@ router.get("/:id", function(req, res){
 })
 
 //EDIT CAMPGROUND ROUTE
-router.get("/:id/edit", function(req, res){
-    //is user logged in
-    if(req.isAuthenticated()){
+router.get("/:id/edit", checkCampgroundOwnership, function(req, res){
         Campground.findById(req.params.id, function(err, foundCampground){
-            if(err){
-                res.redirect("/campgrounds")
-            } else {
-                //does iser own the campground
-                if(foundCampground.author.id.equals(req.user._id)){
-                    res.render("campgrounds/edit", {campground: foundCampground})
-                } else {
-                    res.send("YOU DONT HAVE PERMISSION TO DO THAT")
-                }
-            }
-        }) 
-    } else {
-        console.log("YOU NEED TO BE LOGGED IN TO DO THAT")
-        res.send("YOU NEED TO BE LOGGED IN TO DO THAT")
-    }
-
-        //otherwise redirect
-    //if not, redirect
-
+            res.render("campgrounds/edit", {campground: foundCampground})
+    })
 })
 //UPDATE CAMPGROUND ROUTE
 
@@ -119,6 +100,25 @@ function isLoggedIn(req, res, next){
         return next()
     }
     res.redirect("/login")
+}
+
+function checkCampgroundOwnership(req, res, next){
+    if(req.isAuthenticated()){
+        Campground.findById(req.params.id, function(err, foundCampground){
+            if(err){
+                res.redirect("/campgrounds")
+            } else {
+                //does user own the campground
+                if(foundCampground.author.id.equals(req.user._id)){
+                    next()
+                } else {
+                    res.redirect("/campgrounds")
+                }
+            }
+        }) 
+    } else {
+        res.redirect("/campgrounds")
+    }
 }
 
 module.exports = router
