@@ -42,9 +42,24 @@ Campground.findById(req.params.id, function(err, campground){
 })
 })
 
+// COMMENTS EDIT ROUTE
 router.get("/:comment_id/edit", function(req, res){
-    res.send('EDIT ROUTE FOR COMMENT')
+    Comment.findById(req.params.comment_id, function(err, foundComment){
+        if(err){
+            res.redirect("back")
+        } else {
+            res.render("comments/edit", {campground_id: req.params.id, comment: foundComment})
+        }
+    })
+
 })
+
+//COMMENTS UPDATE
+router.put("/:comment_id", function(req, res){
+    res.send("YOU HIT THE UPDATE ROUTE FOR COMMENT")
+})
+
+
 
 //middleware
 function isLoggedIn(req, res, next){
