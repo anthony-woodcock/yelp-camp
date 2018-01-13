@@ -42,6 +42,10 @@ Campground.findById(req.params.id, function(err, campground){
 })
 })
 
+router.get("/:comment_id/edit", function(req, res){
+    res.send('EDIT ROUTE FOR COMMENT')
+})
+
 //middleware
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
