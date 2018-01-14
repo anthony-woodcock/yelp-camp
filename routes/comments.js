@@ -65,6 +65,13 @@ router.put("/:comment_id", function(req, res){
     })
 })
 
+// COMMENT DESTORY ROUTE
+
+router.delete("/:comment_id", function(req, res){
+    //FindByIdandRemove
+    res.send("This is the destory comment route")
+})
+
 
 
 //middleware
